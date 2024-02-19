@@ -10,7 +10,6 @@ dotenv.config();
 connectDB();
 
 
-
 app.get('/', (req,res) => {
     res.send("Api is running")
 })
