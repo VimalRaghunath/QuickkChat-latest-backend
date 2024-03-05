@@ -4,18 +4,24 @@ const chats = require("./data/data");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const colors = require("colors");
+const userRoutes = require("./Routes/userRoutes")
+const { notFound, errorHandler } = require("./Middlewares/errorHandlingMiddlewares")
 
 dotenv.config();
 
 connectDB();
 
+app.use(express.json()); //to acccept JSON data from frontend
+
 app.get("/", (req, res) => {
   res.send("Api is running");
 });
 
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
-});
+app.use("/api/user", userRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
+
 
 const PORT = process.env.PORT || 7000;
 
