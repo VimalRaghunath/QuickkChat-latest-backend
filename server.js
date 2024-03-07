@@ -6,12 +6,15 @@ const connectDB = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./Routes/userRoutes")
 const { notFound, errorHandler } = require("./Middlewares/errorHandlingMiddlewares")
+const cors = require('cors');
+
 
 dotenv.config();
 
 connectDB();
 
 app.use(express.json()); //to acccept JSON data from frontend
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Api is running");
