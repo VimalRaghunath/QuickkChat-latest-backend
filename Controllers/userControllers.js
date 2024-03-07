@@ -40,6 +40,8 @@ const registeruser = asyncHandler(async (req,res) => {
      }
 });
 
+
+
 const authUser = asyncHandler(async (req,res) => {
 
     const { email, password } = req.body;
