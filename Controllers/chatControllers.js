@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Chat = require("../Model/ChatSchema");
+const User = require("../Model/UserSchema");
 
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
@@ -12,8 +13,42 @@ const accessChat = asyncHandler(async (req, res) => {
   var isChat = await Chat.find({
     isGroupChat: false,
     $and: [
-      { users: { $elemMatch: { $eq: req.user._id } } },
-      { users: { $elemMatch: { $eq: userId } } },
+      { Users: { $elemMatch: { $eq: req.user._id } } },
+      { Users: { $elemMatch: { $eq: userId } } },
     ],
+  })
+    .populate("Users", "-password")
+    .populate("latestMessages");
+
+  isChat = await User.populate(isChat, {
+    path: "latestMessages.sender",
+    select: "name pic email",
   });
+
+  if (isChat.length > 0) {
+    res.send(isChat[0]);
+  } else {
+    var chatData = {
+      ChatName: "sender",
+      isGroupChat: false,
+      Users: [req.user._id, userId],
+    };
+
+    try {
+      const createdChat = await Chat.create(chatData);
+
+      const FullChat = await Chat.findOne({ _id: createdChat._id }).populate(
+        "Users",
+        "-password"
+      );
+
+      res.status(200).send(FullChat)
+    } catch (error) {
+        res.status(400);
+        throw new Error(error.message);
+    }
+  }
 });
+
+
+module.exports = { accessChat }
