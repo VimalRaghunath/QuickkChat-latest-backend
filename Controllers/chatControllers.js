@@ -2,6 +2,10 @@ const asyncHandler = require("express-async-handler");
 const Chat = require("../Model/ChatSchema");
 const User = require("../Model/UserSchema");
 
+
+//--------------------------
+
+
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
 
@@ -49,6 +53,13 @@ const accessChat = asyncHandler(async (req, res) => {
     }
   }
 });
+
+
+
+//----------------------------
+
+
+
 
 
 module.exports = { accessChat }
