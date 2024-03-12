@@ -175,6 +175,7 @@ const renameGroup = asyncHandler(async (req, res) => {
   if (!removed) {
     res.status(404);
     throw new Error("Chat Not Found");
+    
   } else {
     res.json(removed);
   }
