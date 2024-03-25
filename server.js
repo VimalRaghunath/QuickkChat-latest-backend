@@ -36,7 +36,7 @@ const server = app.listen(7000, console.log(`Server Running on PORT ${PORT}`.yel
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
    cors: {
-    origin: "http://localhost:5173", // this is socket.io connection from server
+    origin: "https://quickkchatnew-frontend.vercel.app", // this is socket.io connection from server
    },
 });
 
