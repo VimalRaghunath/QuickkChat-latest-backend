@@ -36,7 +36,7 @@ const server = app.listen(7000, console.log(`Server Running on PORT ${PORT}`.yel
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
    cors: {
-    origin: "https://quickkchat-new.netlify.app",
+    origin: "http://localhost:5173", // this is socket.io connection from server
    },
 });
 
